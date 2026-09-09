@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}<script src="{% static 'js/catalog-filters.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span><span>Каталог</span></nav>
+    <h1 class="page-title">Зарядні станції</h1>
+    <div class="catalog-layout">
+      <aside class="filters" aria-label="Фільтри" data-qa="catalog-filters">
+        <h2>Фільтри</h2>
+        <form
+          id="catalog-filter-form"
+          hx-get="{% url 'catalog:product_list' %}"
+          hx-target="#catalog-results"
+          hx-swap="outerHTML"
+          hx-push-url="true"
+          hx-trigger="change"
+        >
+          <div class="filter-group">
+            <h3>Бренд</h3>
+            {% for brand in brands %}
+              <label class="filter-option">
+                <input type="checkbox" name="brand" value="{{ brand.slug }}" {% if brand.slug in selected_brands %}checked{% endif %}>
+                {{ brand.name }}
+              </label>
+            {% endfor %}
+          </div>
+          <div class="filter-group">
+            <h3>Номінальна потужність</h3>
+            {% for value, label in power_ranges %}
+              <label class="filter-option">
+                <input type="checkbox" name="power" value="{{ value }}" {% if value in selected_power %}checked{% endif %}>
+                {{ label }}
+              </label>
+            {% endfor %}
+          </div>
+          <div class="filter-group">
+            <h3>Тип батареї</h3>
+            {% for value, label in battery_choices %}
+              <label class="filter-option">
+                <input type="checkbox" name="battery" value="{{ value }}" {% if value in selected_battery %}checked{% endif %}>
+                {{ label }}
+              </label>
+            {% endfor %}
+          </div>
+          <div class="filter-group">
+            <h3>Ємність</h3>
+            {% for value, label in capacity_ranges %}
+              <label class="filter-option">
+                <input type="checkbox" name="capacity" value="{{ value }}" {% if value in selected_capacity %}checked{% endif %}>
+                {{ label }}
+              </label>
+            {% endfor %}
+          </div>
+          <button class="btn btn-secondary btn-block" type="button" data-filters-reset>Скинути</button>
+        </form>
+      </aside>
+      <div>
+        <div class="catalog-toolbar">
+          <button class="btn btn-outline filters-toggle" type="button" data-filters-toggle>Фільтри</button>
+          <label class="sr-only" for="sort">Сортування</label>
+          <select
+            id="sort"
+            name="sort"
+            form="catalog-filter-form"
+            hx-get="{% url 'catalog:product_list' %}"
+            hx-target="#catalog-results"
+            hx-swap="outerHTML"
+            hx-push-url="true"
+            hx-trigger="change"
+            hx-include="#catalog-filter-form"
+          >
+            <option value="" {% if not selected_sort %}selected{% endif %}>Спочатку популярні</option>
+            <option value="price_asc" {% if selected_sort == "price_asc" %}selected{% endif %}>Ціна: зростання</option>
+            <option value="price_desc" {% if selected_sort == "price_desc" %}selected{% endif %}>Ціна: спадання</option>
+            <option value="power_desc" {% if selected_sort == "power_desc" %}selected{% endif %}>Номінальна потужність</option>
+            <option value="capacity_desc" {% if selected_sort == "capacity_desc" %}selected{% endif %}>Ємність</option>
+          </select>
+        </div>
+        {% include "catalog/_product_grid.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

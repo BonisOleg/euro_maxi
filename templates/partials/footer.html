@@ -1,0 +1,32 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="{% url 'core:home' %}"><span class="logo-word">Euromaxi UA</span><span class="logo-tag">power stations</span></a>
+      <p>Побутові портативні зарядні станції Jackery, Bluetti, Anker для дому, офісу та подорожей.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Каталог</h3>
+      <a href="{% url 'catalog:product_list' %}">Зарядні станції</a>
+      <a href="{% url 'catalog:product_list' %}?brand=jackery">Jackery</a>
+      <a href="{% url 'catalog:product_list' %}?brand=bluetti">Bluetti</a>
+      <a href="{% url 'catalog:product_list' %}?brand=anker">Anker</a>
+    </div>
+    <div class="footer-col">
+      <h3>Euromaxi UA</h3>
+      <a href="{% url 'content:page_detail' slug='about' %}">Про нас</a>
+      <a href="{% url 'content:contacts' %}">Контакти</a>
+      <a href="{% url 'content:page_detail' slug='delivery' %}">Доставка і оплата</a>
+    </div>
+    <div class="footer-col">
+      <h3>Покупцям</h3>
+      <a href="{% url 'content:page_detail' slug='offer' %}">Договір оферти</a>
+      <a href="{% url 'content:page_detail' slug='privacy' %}">Політика конфіденційності</a>
+      <a href="{% url 'commerce:checkout' %}">Оформлення</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {% now "Y" %} Euromaxi UA</span>
+    <span>Оплата: Monobank · Доставка: Нова Пошта</span>
+  </div>
+</footer>

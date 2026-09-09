@@ -1,0 +1,23 @@
+.env
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+/staticfiles/
+/media/*
+!/media/.gitkeep
+.DS_Store
+*.docx
+*.xlsx
+*.pdf
+docs_raw/
+
+# сирі клієнтські файли — не в git, тільки локально
+docs/
+photo/
+
+.vscode/
+.idea/
+
+# dumpdata + media tar для sync-data.sh (не комітити)
+deploy/data/

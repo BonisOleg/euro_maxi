@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <section class="home-cats">
+    <div class="container">
+      <h1 class="home-cats__title">Побутові зарядні станції</h1>
+      <div class="brand-tiles">
+        {% for tile in brand_tiles %}
+          <a class="brand-tile" href="{% url 'catalog:product_list' %}?brand={{ tile.brand.slug }}">
+            <span class="brand-tile__img">
+              {% if tile.image %}<img src="{{ tile.image.image.url }}" alt="{{ tile.brand.name }}" loading="lazy">{% endif %}
+            </span>
+            <span class="brand-tile__name">{{ tile.brand.name }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="container promo-wrap">
+    <a class="promo-banner" href="{% url 'catalog:product_list' %}">
+      <div class="promo-banner__copy">
+        <span class="promo-badge promo-badge--main">Твоя енергонезалежність</span>
+        <span class="promo-badge promo-badge--sub">Не втрачай світло · Не втрачай звʼязок</span>
+        <p>Портативні станції для дому — резерв роутера, світла й холодильника. Не для електромобілів.</p>
+      </div>
+      <div class="promo-banner__visual">
+        {% if hit_products.0.primary_image %}
+          <img src="{{ hit_products.0.primary_image.image.url }}" alt="Зарядні станції для дому">
+        {% endif %}
+      </div>
+    </a>
+  </section>
+
+  <div class="brands-strip" aria-label="Бренди">
+    <div class="container brands-strip__inner">
+      <a href="{% url 'catalog:product_list' %}?brand=jackery">Jackery</a>
+      <a href="{% url 'catalog:product_list' %}?brand=bluetti">Bluetti</a>
+      <a href="{% url 'catalog:product_list' %}?brand=anker">Anker</a>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Хіти продажу</h2>
+        <a href="{% url 'catalog:product_list' %}">Увесь каталог</a>
+      </div>
+      <div class="product-grid" data-qa="product-grid">
+        {% for product in hit_products %}
+          {% include "catalog/_product_card.html" %}
+        {% empty %}
+          <div class="empty-state"><p>Каталог наповнюється — скоро тут з'являться товари.</p></div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head">
+        <h2>Новинки</h2>
+        <a href="{% url 'catalog:product_list' %}">Дивитись усі</a>
+      </div>
+      <div class="product-grid" data-qa="product-grid">
+        {% for product in new_products %}
+          {% include "catalog/_product_card.html" %}
+        {% empty %}
+          <div class="empty-state"><p>Скоро тут з'являться новинки.</p></div>
+        {% endfor %}
+      </div>
+      <div class="features">
+        <div class="feature">
+          <strong>Доставка Нова Пошта</strong>
+          <p>Відділення, поштомат або адреса по Україні.</p>
+        </div>
+        <div class="feature">
+          <strong>Оплата Monobank</strong>
+          <p>Онлайн-оплата карткою через еквайринг.</p>
+        </div>
+        <div class="feature">
+          <strong>Для побуту</strong>
+          <p>Power station для дому — не зарядки EV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

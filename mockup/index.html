@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Euromaxi UA — побутові зарядні станції</title>
+  <meta name="description" content="Інтернет-магазин побутових портативних зарядних станцій Euromaxi UA. Jackery, Bluetti, Anker.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
+</head>
+<body>
+  <header class="site-header" data-site-header></header>
+  <main class="site-main">
+    <section class="home-cats">
+      <div class="container">
+        <h1 class="home-cats__title">Побутові зарядні станції</h1>
+        <div class="brand-tiles">
+          <a class="brand-tile" href="catalog.html?brand=Jackery">
+            <span class="brand-tile__img"><img src="img/jackery-1000v2-1.jpg" alt="Jackery"></span>
+            <span class="brand-tile__name">Jackery</span>
+          </a>
+          <a class="brand-tile" href="catalog.html?brand=Bluetti">
+            <span class="brand-tile__img"><img src="img/bluetti-ac180.jpg" alt="Bluetti"></span>
+            <span class="brand-tile__name">Bluetti</span>
+          </a>
+          <a class="brand-tile" href="catalog.html?brand=Anker">
+            <span class="brand-tile__img"><img src="img/anker-c1000.jpg" alt="Anker"></span>
+            <span class="brand-tile__name">Anker</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container promo-wrap">
+      <a class="promo-banner" href="catalog.html">
+        <div class="promo-banner__copy">
+          <span class="promo-badge promo-badge--main">Твоя енергонезалежність</span>
+          <span class="promo-badge promo-badge--sub">Не втрачай світло · Не втрачай звʼязок</span>
+          <p>Портативні станції для дому — резерв роутера, світла й холодильника. Не для електромобілів.</p>
+        </div>
+        <div class="promo-banner__visual">
+          <img src="img/jackery-1000plus.jpg" alt="Зарядні станції для дому">
+        </div>
+      </a>
+    </section>
+
+    <div class="brands-strip" aria-label="Бренди">
+      <div class="container brands-strip__inner">
+        <a href="catalog.html?brand=Jackery">Jackery</a>
+        <a href="catalog.html?brand=Bluetti">Bluetti</a>
+        <a href="catalog.html?brand=Anker">Anker</a>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Хіти продажу</h2>
+          <a href="catalog.html">Увесь каталог</a>
+        </div>
+        <div class="product-grid" data-hits></div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-head">
+          <h2>Новинки</h2>
+          <a href="catalog.html">Дивитись усі</a>
+        </div>
+        <div class="product-grid" data-news></div>
+        <div class="features">
+          <div class="feature">
+            <strong>Доставка Нова Пошта</strong>
+            <p>Відділення, поштомат або адреса по Україні.</p>
+          </div>
+          <div class="feature">
+            <strong>Оплата Monobank</strong>
+            <p>Онлайн-оплата карткою через еквайринг.</p>
+          </div>
+          <div class="feature">
+            <strong>Для побуту</strong>
+            <p>Power station для дому — не зарядки EV.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" data-site-footer></footer>
+  <script src="js/products.js?v=5"></script>
+  <script src="js/cart.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var hits = (window.EUROMAXI_PRODUCTS || []).filter(function (p) { return p.hit; }).slice(0, 4);
+      var news = (window.EUROMAXI_PRODUCTS || []).filter(function (p) { return p.isNew; }).slice(0, 4);
+      document.querySelector("[data-hits]").innerHTML = hits.map(window.renderProductCard).join("");
+      document.querySelector("[data-news]").innerHTML = news.map(window.renderProductCard).join("");
+    });
+  </script>
+</body>
+</html>

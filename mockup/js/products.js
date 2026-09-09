@@ -1,0 +1,256 @@
+window.EUROMAXI_PRODUCTS = [
+  {
+    id: "jackery-explorer-100-plus",
+    sku: "EMX-JK-100P",
+    brand: "Jackery",
+    name: "Jackery Explorer 100 Plus",
+    capacity: 99,
+    power: 128,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В · USB-C · USB-A · DC",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "Чиста синусоїда · компактний формфактор",
+    weight: 1.3,
+    size: "19.3 × 14.1 × 8.2 см",
+    temp: "−10…40 °C",
+    price: 7990,
+    oldPrice: null,
+    hit: false,
+    isNew: true,
+    sale: false,
+    inStock: true,
+    image: "img/jackery-100plus-1.jpg",
+    images: ["img/jackery-100plus-1.jpg", "img/jackery-300plus-1.jpg", "img/jackery-300plus-2.jpg"],
+    short: "99 Вт·год · 128 Вт · LiFePO₄",
+    description:
+      "Кишенькова портативна станція для роутера, ноутбука та гаджетів удома чи в дорозі. Побутове резервне живлення малої потужності (заглушка за лінійкою Explorer 100 Plus)."
+  },
+  {
+    id: "jackery-explorer-300-plus",
+    sku: "EMX-JK-300P",
+    brand: "Jackery",
+    name: "Jackery Explorer 300 Plus",
+    capacity: 288,
+    power: 300,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В · USB-C PD · USB-A · DC",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "Чиста синусоїда · тиха робота · LED-індикація",
+    weight: 3.8,
+    size: "23.2 × 15.3 × 15.5 см",
+    temp: "−10…40 °C",
+    price: 15990,
+    oldPrice: null,
+    hit: true,
+    isNew: false,
+    sale: false,
+    inStock: true,
+    image: "img/jackery-300plus-1.jpg",
+    images: ["img/jackery-300plus-1.jpg", "img/jackery-300plus-2.jpg", "img/jackery-100plus-1.jpg"],
+    short: "288 Вт·год · 300 Вт · LiFePO₄",
+    description:
+      "Компактна побутова станція для світла, Wi‑Fi, ноутбука та зарядки телефонів під час відключень. Чиста синусоїда 230 В."
+  },
+  {
+    id: "jackery-explorer-500-v2",
+    sku: "EMX-JK-500V2",
+    brand: "Jackery",
+    name: "Jackery Explorer 500 v2",
+    capacity: 512,
+    power: 500,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×2 · USB-C · USB-A · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "UPS · чиста синусоїда · додаток",
+    weight: 5.5,
+    size: "25.0 × 20.0 × 18.0 см",
+    temp: "−10…40 °C",
+    price: 24990,
+    oldPrice: 26990,
+    hit: true,
+    isNew: true,
+    sale: true,
+    inStock: true,
+    image: "img/jackery-500v2-1.jpg",
+    images: ["img/jackery-500v2-1.jpg", "img/jackery-500v2-2.jpg", "img/jackery-300plus-1.jpg"],
+    short: "512 Вт·год · 500 Вт · LiFePO₄",
+    description:
+      "Портативна електростанція середнього класу для квартири: роутер, освітлення, ТВ, зарядка гаджетів. Модель з лінійки Explorer v2."
+  },
+  {
+    id: "jackery-explorer-1000-v2",
+    sku: "EMX-JK-1000V2",
+    brand: "Jackery",
+    name: "Jackery Explorer 1000 v2",
+    capacity: 1070,
+    power: 1500,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×3 · USB-C PD · USB-A · DC · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель (до ~800 Вт)",
+    features: "UPS · чиста синусоїда · додаток · швидка зарядка",
+    weight: 10.8,
+    size: "32.7 × 22.4 × 24.7 см",
+    temp: "−10…40 °C",
+    price: 42990,
+    oldPrice: 46990,
+    hit: true,
+    isNew: true,
+    sale: true,
+    inStock: true,
+    image: "img/jackery-1000v2-1.jpg",
+    images: ["img/jackery-1000v2-1.jpg", "img/jackery-1000v2-2.jpg", "img/jackery-1000v2-3.jpg"],
+    short: "1070 Вт·год · 1500 Вт · LiFePO₄",
+    description:
+      "Побутова портативна станція LiFePO₄: холодильник, чайник, ноутбуки та кілька приладів одночасно. UPS, чиста синусоїда."
+  },
+  {
+    id: "jackery-explorer-2000-v2",
+    sku: "EMX-JK-2000V2",
+    brand: "Jackery",
+    name: "Jackery Explorer 2000 v2",
+    capacity: 2042,
+    power: 2200,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×3 · USB-C PD · USB-A · DC · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель (до ~1400 Вт)",
+    features: "UPS · чиста синусоїда · додаток · розширювана ємність",
+    weight: 19.5,
+    size: "37.3 × 30.5 × 25.0 см",
+    temp: "−10…40 °C",
+    price: 59990,
+    oldPrice: 64990,
+    hit: true,
+    isNew: false,
+    sale: true,
+    inStock: true,
+    image: "img/jackery-2000v2-1.jpg",
+    images: ["img/jackery-2000v2-1.jpg", "img/jackery-2000v2-2.jpg", "img/jackery-1000v2-1.jpg"],
+    short: "2042 Вт·год · 2200 Вт · LiFePO₄",
+    description:
+      "Потужний домашній резерв: котел, холодильник, освітлення на тривалі відключення. Портативна електростанція Explorer 2000 v2."
+  },
+  {
+    id: "bluetti-ac70",
+    sku: "EMX-BL-AC70",
+    brand: "Bluetti",
+    name: "BLUETTI AC70",
+    capacity: 768,
+    power: 1000,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×2 · USB-C · USB-A · DC · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "UPS · чиста синусоїда · додаток · турбо-зарядка",
+    weight: 10.2,
+    size: "31.4 × 21.0 × 25.5 см",
+    temp: "0…40 °C",
+    price: 28990,
+    oldPrice: 31990,
+    hit: true,
+    isNew: false,
+    sale: true,
+    inStock: true,
+    image: "img/bluetti-ac70.jpg",
+    images: ["img/bluetti-ac70.jpg", "img/bluetti-ac180.jpg", "img/jackery-500v2-1.jpg"],
+    short: "768 Вт·год · 1000 Вт · LiFePO₄",
+    description:
+      "Побутова зарядна станція Bluetti для квартири та дачі: світло, звʼязок, ноутбуки, дрібна техніка. Не для зарядки електромобілів."
+  },
+  {
+    id: "bluetti-ac180",
+    sku: "EMX-BL-AC180",
+    brand: "Bluetti",
+    name: "BLUETTI AC180",
+    capacity: 1152,
+    power: 1800,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×4 · USB-C PD · USB-A · DC · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель (до ~500 Вт)",
+    features: "UPS · чиста синусоїда · додаток · швидка зарядка ~45 хв",
+    weight: 16.0,
+    size: "34.0 × 24.7 × 31.7 см",
+    temp: "0…40 °C",
+    price: 44990,
+    oldPrice: null,
+    hit: true,
+    isNew: false,
+    sale: false,
+    inStock: true,
+    image: "img/bluetti-ac180.jpg",
+    images: ["img/bluetti-ac180.jpg", "img/bluetti-ac70.jpg", "img/jackery-1000v2-1.jpg"],
+    short: "1152 Вт·год · 1800 Вт · LiFePO₄",
+    description:
+      "Домашній резерв ~1,1 кВт·год з номінальною потужністю 1800 Вт — холодильник, роутер, освітлення, зарядка гаджетів."
+  },
+  {
+    id: "anker-solix-c800",
+    sku: "EMX-AK-C800",
+    brand: "Anker",
+    name: "Anker SOLIX C800",
+    capacity: 768,
+    power: 1200,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×3 · USB-C · USB-A · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "UPS · чиста синусоїда · додаток · швидка зарядка",
+    weight: 11.2,
+    size: "37.3 × 20.6 × 24.6 см",
+    temp: "0…40 °C",
+    price: 33990,
+    oldPrice: 36990,
+    hit: true,
+    isNew: false,
+    sale: true,
+    inStock: true,
+    image: "img/anker-c800.jpg",
+    images: ["img/anker-c800.jpg", "img/anker-c1000.jpg", "img/anker-solix.jpg"],
+    short: "768 Вт·год · 1200 Вт · LiFePO₄",
+    description:
+      "Портативна станція Anker SOLIX для побутового резерву: швидка зарядка, чиста синусоїда, зручна вага для перенесення квартирою."
+  },
+  {
+    id: "anker-solix-c1000",
+    sku: "EMX-AK-C1000",
+    brand: "Anker",
+    name: "Anker SOLIX C1000",
+    capacity: 1056,
+    power: 1800,
+    batteryType: "LiFePO₄",
+    outputs: "AC 230 В ×4 · USB-C PD · USB-A · авторозетка",
+    charging: "Мережа 230 В · авто 12 В · сонячна панель",
+    features: "UPS · чиста синусоїда · додаток · InfiniPower",
+    weight: 12.9,
+    size: "37.6 × 20.5 × 26.7 см",
+    temp: "0…40 °C",
+    price: 41990,
+    oldPrice: null,
+    hit: false,
+    isNew: true,
+    sale: false,
+    inStock: true,
+    image: "img/anker-c1000.jpg",
+    images: ["img/anker-c1000.jpg", "img/anker-c800.jpg", "img/anker-solix.jpg"],
+    short: "1056 Вт·год · 1800 Вт · LiFePO₄",
+    description:
+      "Побутова станція ~1 кВт·год з номінальною потужністю 1800 Вт для дому під час відключень. Не EV-зарядка — класична portable power station."
+  }
+];
+
+/** Зворотна сумісність для старих посилань у макеті. */
+window.CHARGUA_PRODUCTS = window.EUROMAXI_PRODUCTS;
+
+/** Ціни в каталозі вже з ПДВ. Ставка для розшифровки «в т.ч. ПДВ». */
+window.VAT_RATE = 0.2;
+
+window.formatPrice = function formatPrice(value) {
+  return new Intl.NumberFormat("uk-UA").format(value) + " ₴";
+};
+
+/** Сума ПДВ з ціни з ПДВ (gross): VAT = gross × rate / (1 + rate) */
+window.vatFromGross = function vatFromGross(gross) {
+  const rate = window.VAT_RATE || 0.2;
+  return Math.round(((Number(gross) || 0) * rate) / (1 + rate));
+};
+
+window.getProductById = function getProductById(id) {
+  return (window.EUROMAXI_PRODUCTS || []).find((p) => p.id === id) || null;
+};

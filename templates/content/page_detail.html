@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span><span>{{ page.title }}</span></nav>
+    <h1 class="page-title">{{ page.title }}</h1>
+    <div class="static-page-body">
+      {{ page.body|safe }}
+    </div>
+  </div>
+{% endblock %}

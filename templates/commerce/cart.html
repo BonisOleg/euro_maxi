@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}<script src="{% static 'js/cart-page.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span><span>Кошик</span></nav>
+    <h1 class="page-title">Кошик</h1>
+    <div
+      data-cart-root
+      data-qa="cart-root"
+      data-catalog-url="{% url 'catalog:product_list' %}"
+      data-checkout-url="{% url 'commerce:checkout' %}"
+    ></div>
+  </div>
+{% endblock %}

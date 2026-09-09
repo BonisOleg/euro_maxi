@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Контакти — Euromaxi UA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
+</head>
+<body>
+  <header class="site-header" data-site-header></header>
+  <main class="site-main">
+    <div class="container">
+      <nav class="breadcrumbs"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span>Контакти</span></nav>
+      <h1 class="page-title">Контакти</h1>
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <h2>Звʼязок</h2>
+          <p>Телефон: <a href="tel:+380000000000">+38 (000) 000-00-00</a></p>
+          <p>Email: <a href="mailto:info@chargua.placeholder">info@chargua.placeholder</a></p>
+          <p>Графік: Пн–Пт 10:00–18:00</p>
+          <p style="margin-top:16px;color:var(--color-text-muted)">Контакти — плейсхолдери до надання даних клієнтом.</p>
+        </div>
+        <form class="checkout-form" onsubmit="event.preventDefault(); window.showToast('Повідомлення надіслано (макет)'); this.reset();">
+          <h2 style="margin-bottom:16px">Форма зворотного звʼязку</h2>
+          <div class="field">
+            <label for="c-name">Імʼя *</label>
+            <input id="c-name" required>
+          </div>
+          <div class="field">
+            <label for="c-phone">Телефон *</label>
+            <input id="c-phone" type="tel" required>
+          </div>
+          <div class="field">
+            <label for="c-email">Email *</label>
+            <input id="c-email" type="email" required>
+          </div>
+          <div class="field">
+            <label for="c-msg">Повідомлення *</label>
+            <textarea id="c-msg" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Надіслати</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer" data-site-footer></footer>
+  <script src="js/products.js?v=5"></script>
+  <script src="js/cart.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+</body>
+</html>

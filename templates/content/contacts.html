@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span><span>Контакти</span></nav>
+    <h1 class="page-title">Контакти</h1>
+    <div class="contacts-grid">
+      <div class="contact-card">
+        <h2>Звʼязок</h2>
+        <p>Телефон: <a href="tel:{{ site.phone|cut:' ' }}">{{ site.phone }}</a></p>
+        <p>Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        {% if site.working_hours %}<p>Графік: {{ site.working_hours }}</p>{% endif %}
+        {% if site.address %}<p>{{ site.address }}</p>{% endif %}
+      </div>
+      <form class="checkout-form" method="post" novalidate>
+        {% csrf_token %}
+        <!-- LS-40: honeypot — приховано з екрану й читалок, боти все одно заповнюють -->
+        <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+          <label for="{{ form.website.id_for_label }}">Залиште це поле порожнім</label>
+          {{ form.website }}
+        </div>
+        <h2 style="margin-bottom:16px">Форма зворотного звʼязку</h2>
+        <div class="field {% if form.name.errors %}is-invalid{% endif %}">
+          <label for="{{ form.name.id_for_label }}">Імʼя *</label>
+          {{ form.name }}
+          <div class="field-error">{{ form.name.errors|join:" " }}</div>
+        </div>
+        <div class="field {% if form.phone.errors %}is-invalid{% endif %}">
+          <label for="{{ form.phone.id_for_label }}">Телефон</label>
+          {{ form.phone }}
+        </div>
+        <div class="field {% if form.email.errors %}is-invalid{% endif %}">
+          <label for="{{ form.email.id_for_label }}">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="field {% if form.message.errors %}is-invalid{% endif %}">
+          <label for="{{ form.message.id_for_label }}">Повідомлення *</label>
+          {{ form.message }}
+          <div class="field-error">{{ form.message.errors|join:" " }}</div>
+        </div>
+        {% if form.non_field_errors %}
+          <div class="field-hint" role="alert">{{ form.non_field_errors|join:" " }}</div>
+        {% endif %}
+        <button class="btn btn-primary" type="submit">Надіслати</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

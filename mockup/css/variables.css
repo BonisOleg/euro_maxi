@@ -1,0 +1,60 @@
+:root {
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f9fc;
+  --color-bg-muted: #eef4f9;
+  --color-text: #0a4d7a;
+  --color-text-strong: #063554;
+  --color-text-muted: #5a7a94;
+  --color-product-title: #1a1a1a;
+  --color-primary: #0073b8;
+  --color-primary-dark: #005a91;
+  --color-primary-soft: #e5f3fb;
+  --color-accent: #0090d4;
+  --color-border: #d4e3ef;
+  --color-border-strong: #a8c5db;
+  --color-success: #1a7a4c;
+  --color-danger: #c0392b;
+  --color-warning: #c47a00;
+  --color-hit: #0073b8;
+  --color-new: #0090d4;
+  --color-sale: #c0392b;
+
+  --font-display: "Manrope", "Segoe UI", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(6, 53, 84, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 115, 184, 0.08);
+
+  --header-h: 72px;
+  --container: 1180px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --header-h: 64px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-h: 56px;
+    --space-7: 36px;
+    --space-8: 48px;
+  }
+}

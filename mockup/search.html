@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Пошук — Euromaxi UA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
+</head>
+<body>
+  <header class="site-header" data-site-header></header>
+  <main class="site-main">
+    <div class="container">
+      <nav class="breadcrumbs"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span>Пошук</span></nav>
+      <h1 class="page-title">Результати пошуку</h1>
+      <p class="catalog-count" data-search-label style="margin-bottom:20px"></p>
+      <div class="product-grid" data-search-grid></div>
+    </div>
+  </main>
+  <footer class="site-footer" data-site-footer></footer>
+  <script src="js/products.js?v=5"></script>
+  <script src="js/cart.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var q = (new URLSearchParams(location.search).get("q") || "").trim().toLowerCase();
+      var list = (window.EUROMAXI_PRODUCTS || []).filter(function (p) {
+        if (!q) return true;
+        return (p.name + " " + p.sku + " " + p.brand).toLowerCase().indexOf(q) !== -1;
+      });
+      document.querySelector("[data-search-label]").textContent = q
+        ? ('За запитом «' + q + '» знайдено: ' + list.length)
+        : ("Усі товари: " + list.length);
+      document.querySelector("[data-search-grid]").innerHTML = list.length
+        ? list.map(window.renderProductCard).join("")
+        : '<div class="empty-state"><h2>Нічого не знайдено</h2><p>Спробуйте інший запит або відкрийте каталог.</p><a class="btn btn-primary" href="catalog.html">Каталог</a></div>';
+    });
+  </script>
+</body>
+</html>

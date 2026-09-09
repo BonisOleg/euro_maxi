@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Сторінку не знайдено — Euromaxi UA{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="empty-state">
+      <h1>404</h1>
+      <h2>Сторінку не знайдено</h2>
+      <p>Перевірте адресу або поверніться на головну.</p>
+      <a class="btn btn-primary" href="{% url 'core:home' %}">На головну</a>
+    </div>
+  </div>
+{% endblock %}

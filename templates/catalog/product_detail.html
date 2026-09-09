@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}<script src="{% static 'js/product-gallery.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Хлібні крихти">
+      <a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span>
+      <a href="{% url 'catalog:product_list' %}">Каталог</a><span aria-hidden="true">/</span>
+      <span>{{ product }}</span>
+    </nav>
+    <div class="product-layout">
+      <div class="gallery">
+        <div class="gallery-main">
+          <img data-main-img src="{{ product.primary_image.image.url }}" alt="{{ product.primary_image.alt|default:product.name }}">
+        </div>
+        {% if product.images.count > 1 %}
+          <div class="gallery-thumbs">
+            {% for img in product.images.all %}
+              <button type="button" class="{% if img.is_primary or forloop.first %}is-active{% endif %}" data-thumb="{{ img.image.url }}">
+                <img src="{{ img.image.url }}" alt="">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="product-info">
+        <div class="product-info__brand">{{ product.brand }}</div>
+        <h1>{{ product.name }}</h1>
+        <div class="product-info__badges">
+          {% if product.is_hit %}<span class="badge badge-hit">Хіт</span>{% endif %}
+          {% if product.is_new %}<span class="badge badge-new">Новинка</span>{% endif %}
+          {% if product.old_price_uah %}<span class="badge badge-sale">Акція</span>{% endif %}
+        </div>
+        <div class="product-info__sku">Артикул: {{ product.sku }}</div>
+        <div class="product-info__stock is-in">В наявності</div>
+        <div class="product-info__price">
+          <span class="price">{{ product.price_uah|floatformat:0 }} ₴</span>
+          {% if product.old_price_uah %}<span class="price-old">{{ product.old_price_uah|floatformat:0 }} ₴</span>{% endif %}
+          <span class="price-vat">з ПДВ</span>
+        </div>
+        <div class="specs">
+          {% if product.capacity_wh %}<div class="spec-row"><span class="spec-label">Ємність акумулятора</span><span class="spec-value">{{ product.capacity_wh }} Вт·год</span></div>{% endif %}
+          {% if product.output_power_w %}<div class="spec-row"><span class="spec-label">Номінальна (робоча) потужність</span><span class="spec-value">{{ product.output_power_w }} Вт</span></div>{% endif %}
+          {% if product.get_battery_type_display %}<div class="spec-row"><span class="spec-label">Тип акумуляторної батареї</span><span class="spec-value">{{ product.get_battery_type_display }}</span></div>{% endif %}
+          {% if product.outputs %}<div class="spec-row"><span class="spec-label">Вихідні інтерфейси (роз'єми)</span><span class="spec-value">{{ product.outputs }}</span></div>{% endif %}
+          {% if product.charging %}<div class="spec-row"><span class="spec-label">Способи зарядки</span><span class="spec-value">{{ product.charging }}</span></div>{% endif %}
+          {% if product.features %}<div class="spec-row"><span class="spec-label">Додаткові функції</span><span class="spec-value">{{ product.features }}</span></div>{% endif %}
+          {% if product.weight_kg %}<div class="spec-row"><span class="spec-label">Вага</span><span class="spec-value">{{ product.weight_kg }} кг</span></div>{% endif %}
+          {% if product.dimensions %}<div class="spec-row"><span class="spec-label">Розмір</span><span class="spec-value">{{ product.dimensions }}</span></div>{% endif %}
+        </div>
+        <div class="product-buy" data-buy-widget>
+          <div class="qty" data-qty>
+            <button type="button" data-qty-minus aria-label="Менше">−</button>
+            <input type="number" value="1" min="1" inputmode="numeric" aria-label="Кількість">
+            <button type="button" data-qty-plus aria-label="Більше">+</button>
+          </div>
+          <button class="btn btn-primary" type="button" data-add="{{ product.sku }}" data-qa="cart-add">Додати до кошика</button>
+          <a class="btn btn-outline" href="{% url 'commerce:checkout' %}" data-buy-now="{{ product.sku }}">Оформити</a>
+        </div>
+        <div class="product-desc">
+          <h2>Опис</h2>
+          {% if product.description %}
+            <p>{{ product.description|linebreaksbr }}</p>
+          {% elif product.short_description %}
+            <p>{{ product.short_description }}</p>
+          {% endif %}
+          <p>Ціна вказана з ПДВ (20%).</p>
+        </div>
+      </div>
+    </div>
+
+    {% if related_products %}
+      <section class="section">
+        <div class="section-head">
+          <h2>Схожі товари</h2>
+        </div>
+        <div class="product-grid" data-qa="product-grid">
+          {% for product in related_products %}
+            {% include "catalog/_product_card.html" %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

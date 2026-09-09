@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}<script src="{% static 'js/checkout.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span>
+      <a href="{% url 'commerce:cart' %}">Кошик</a><span aria-hidden="true">/</span>
+      <span>Оформлення</span>
+    </nav>
+    <h1 class="page-title">Оформлення замовлення</h1>
+
+    {% if form.non_field_errors %}
+      <div class="field-hint" role="alert">{{ form.non_field_errors|join:" " }}</div>
+    {% endif %}
+
+    <div class="checkout-layout">
+      <form class="checkout-form" method="post" data-checkout-form novalidate>
+        {% csrf_token %}
+        <div class="checkout-block" style="border:none;padding:0;margin:0 0 16px">
+          <h2>Дані покупця</h2>
+          <div class="field {% if form.full_name.errors %}is-invalid{% endif %}">
+            <label for="{{ form.full_name.id_for_label }}">ПІБ *</label>
+            <input id="{{ form.full_name.id_for_label }}" name="{{ form.full_name.html_name }}" required autocomplete="name" placeholder="Іван Петренко" value="{{ form.full_name.value|default:'' }}">
+            <div class="field-error">Вкажіть ПІБ</div>
+          </div>
+          <div class="field {% if form.phone.errors %}is-invalid{% endif %}">
+            <label for="{{ form.phone.id_for_label }}">Телефон *</label>
+            <input id="{{ form.phone.id_for_label }}" name="{{ form.phone.html_name }}" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+38 (0XX) XXX-XX-XX" value="{{ form.phone.value|default:'' }}">
+            <div class="field-error">Вкажіть телефон</div>
+          </div>
+          <div class="field {% if form.email.errors %}is-invalid{% endif %}">
+            <label for="{{ form.email.id_for_label }}">Email (необовʼязково)</label>
+            <input id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" type="email" autocomplete="email" inputmode="email" placeholder="name@email.com" value="{{ form.email.value|default:'' }}">
+            <div class="field-error">Вкажіть коректний email</div>
+          </div>
+          <div class="field">
+            <label for="{{ form.comment.id_for_label }}">Коментар</label>
+            <textarea id="{{ form.comment.id_for_label }}" name="{{ form.comment.html_name }}" placeholder="Побажання до замовлення (необовʼязково)">{{ form.comment.value|default:'' }}</textarea>
+          </div>
+        </div>
+
+        <div class="checkout-block">
+          <h2>Доставка Нова Пошта</h2>
+          <div class="field {% if form.city.errors %}is-invalid{% endif %}">
+            <label for="{{ form.city.id_for_label }}">Місто *</label>
+            <input id="{{ form.city.id_for_label }}" name="{{ form.city.html_name }}" required placeholder="Київ" autocomplete="address-level2" value="{{ form.city.value|default:'' }}">
+            <div class="field-error">Вкажіть місто</div>
+            <div class="field-hint">У продакшені — підказки API НП</div>
+          </div>
+          <div class="field">
+            <label>Спосіб отримання *</label>
+            <div class="radio-list">
+              {% for value, label in form.np_type.field.choices %}
+                <label>
+                  <input type="radio" name="{{ form.np_type.html_name }}" value="{{ value }}" {% if form.np_type.value|default:"warehouse" == value %}checked{% endif %}>
+                  {{ label }}
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="field {% if form.np_point.errors %}is-invalid{% endif %}">
+            <label for="{{ form.np_point.id_for_label }}">Відділення / адреса *</label>
+            <input id="{{ form.np_point.id_for_label }}" name="{{ form.np_point.html_name }}" required placeholder="Відділення №1 / вул. Хрещатик, 1" value="{{ form.np_point.value|default:'' }}">
+            <div class="field-error">Вкажіть пункт видачі або адресу</div>
+          </div>
+        </div>
+
+        <div class="checkout-block">
+          <h2>Оплата</h2>
+          <div class="radio-list">
+            <label>
+              <input type="radio" name="payment" value="mono" checked disabled>
+              Monobank
+              <small>Онлайн-оплата на захищеній сторінці еквайрингу</small>
+            </label>
+          </div>
+        </div>
+
+        <div class="field {% if form.agree.errors %}is-invalid{% endif %}" data-agree-field>
+          <label class="checkbox-row">
+            <input id="{{ form.agree.id_for_label }}" name="{{ form.agree.html_name }}" type="checkbox" required {% if form.agree.value %}checked{% endif %}>
+            <span>Я погоджуюсь з <a href="{% url 'content:page_detail' slug='offer' %}" target="_blank" rel="noopener">офертою</a> та <a href="{% url 'content:page_detail' slug='privacy' %}" target="_blank" rel="noopener">політикою конфіденційності</a> *</span>
+          </label>
+          <div class="field-error">Потрібна згода на обробку даних</div>
+        </div>
+
+        <input type="hidden" name="cart_data" data-cart-data-input value="[]">
+        {% if form.cart_data.errors %}
+          <div class="field-hint" role="alert">{{ form.cart_data.errors|join:" " }}</div>
+        {% endif %}
+        <button class="btn btn-primary btn-block" type="submit">Сплатити через Monobank</button>
+      </form>
+
+      <aside class="summary" data-checkout-summary data-catalog-url="{% url 'catalog:product_list' %}"></aside>
+    </div>
+  </div>
+{% endblock %}

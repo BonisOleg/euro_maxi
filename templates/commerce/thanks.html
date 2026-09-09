@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}<script src="{% static 'js/thanks.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="thanks" data-qa="thanks"{% if order %} data-clear-cart{% endif %}>
+      {% if order %}
+        <h1>Дякуємо!</h1>
+        <p>
+          Замовлення <strong>{{ order.order_number }}</strong> на суму
+          <strong>{{ order.total_uah|floatformat:0 }} ₴</strong> прийнято.<br>
+          Оплата: {{ order.get_payment_method_display }}.
+          {% if order.email %}Підтвердження надішлемо на {{ order.email }}.{% endif %}
+        </p>
+      {% else %}
+        <h1>Замовлення не знайдено</h1>
+        <p>Деталі доступні лише після оформлення в цій сесії браузера.</p>
+      {% endif %}
+      <a class="btn btn-primary" href="{% url 'catalog:product_list' %}">Повернутись до каталогу</a>
+    </div>
+  </div>
+{% endblock %}

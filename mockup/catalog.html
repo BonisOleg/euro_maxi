@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Каталог зарядних станцій — Euromaxi UA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
+</head>
+<body>
+  <header class="site-header" data-site-header></header>
+  <main class="site-main">
+    <div class="container">
+      <nav class="breadcrumbs"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span>Каталог</span></nav>
+      <h1 class="page-title">Зарядні станції</h1>
+      <div class="catalog-layout">
+        <aside class="filters" aria-label="Фільтри">
+          <h2>Фільтри</h2>
+          <div class="filter-group">
+            <h3>Бренд</h3>
+            <label class="filter-option"><input type="checkbox" name="brand" value="Jackery"> Jackery</label>
+            <label class="filter-option"><input type="checkbox" name="brand" value="Bluetti"> Bluetti</label>
+            <label class="filter-option"><input type="checkbox" name="brand" value="Anker"> Anker</label>
+          </div>
+          <div class="filter-group">
+            <h3>Номінальна потужність</h3>
+            <label class="filter-option"><input type="checkbox" name="power" value="0-500"> до 500 Вт</label>
+            <label class="filter-option"><input type="checkbox" name="power" value="501-1500"> 501–1500 Вт</label>
+            <label class="filter-option"><input type="checkbox" name="power" value="1501+"> від 1501 Вт</label>
+          </div>
+          <div class="filter-group">
+            <h3>Тип батареї</h3>
+            <label class="filter-option"><input type="checkbox" name="battery" value="LiFePO₄"> LiFePO₄</label>
+          </div>
+          <div class="filter-group">
+            <h3>Ємність</h3>
+            <label class="filter-option"><input type="checkbox" name="capacity" value="0-500"> до 500 Вт·год</label>
+            <label class="filter-option"><input type="checkbox" name="capacity" value="501-1000"> 501–1000 Вт·год</label>
+            <label class="filter-option"><input type="checkbox" name="capacity" value="1001+"> від 1001 Вт·год</label>
+          </div>
+          <button class="btn btn-secondary btn-block" type="button" data-filters-reset>Скинути</button>
+        </aside>
+        <div>
+          <div class="catalog-toolbar">
+            <button class="btn btn-outline filters-toggle" type="button" data-filters-toggle>Фільтри</button>
+            <div class="catalog-count" data-catalog-count>Знайдено: 0</div>
+            <label class="sr-only" for="sort">Сортування</label>
+            <select id="sort">
+              <option value="popular">Спочатку популярні</option>
+              <option value="price-asc">Ціна: зростання</option>
+              <option value="price-desc">Ціна: спадання</option>
+              <option value="power-desc">Номінальна потужність</option>
+              <option value="capacity-desc">Ємність</option>
+            </select>
+          </div>
+          <div class="product-grid" data-catalog-grid></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer" data-site-footer></footer>
+  <script src="js/products.js?v=5"></script>
+  <script src="js/cart.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script src="js/catalog.js?v=5"></script>
+</body>
+</html>

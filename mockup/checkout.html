@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Оформлення замовлення — Euromaxi UA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
+</head>
+<body>
+  <header class="site-header" data-site-header></header>
+  <main class="site-main">
+    <div class="container">
+      <nav class="breadcrumbs">
+        <a href="index.html">Головна</a><span aria-hidden="true">/</span>
+        <a href="cart.html">Кошик</a><span aria-hidden="true">/</span>
+        <span>Оформлення</span>
+      </nav>
+      <h1 class="page-title">Оформлення замовлення</h1>
+      <div class="checkout-layout">
+        <form class="checkout-form" data-checkout-form novalidate>
+          <div class="checkout-block" style="border:none;padding:0;margin:0 0 16px">
+            <h2>Дані покупця</h2>
+            <div class="field">
+              <label for="fullName">ПІБ *</label>
+              <input id="fullName" name="fullName" required autocomplete="name" placeholder="Іван Петренко">
+              <div class="field-error">Вкажіть ПІБ</div>
+            </div>
+            <div class="field">
+              <label for="phone">Телефон *</label>
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+38 (0XX) XXX-XX-XX">
+              <div class="field-error">Вкажіть телефон</div>
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="name@email.com">
+              <div class="field-error">Вкажіть коректний email</div>
+            </div>
+            <div class="field">
+              <label for="comment">Коментар</label>
+              <textarea id="comment" name="comment" placeholder="Побажання до замовлення (необовʼязково)"></textarea>
+            </div>
+          </div>
+
+          <div class="checkout-block">
+            <h2>Доставка Нова Пошта</h2>
+            <div class="field">
+              <label for="city">Місто *</label>
+              <input id="city" name="city" required placeholder="Київ" autocomplete="address-level2">
+              <div class="field-error">Вкажіть місто</div>
+              <div class="field-hint">У продакшені — підказки API НП</div>
+            </div>
+            <div class="field">
+              <label>Спосіб отримання *</label>
+              <div class="radio-list">
+                <label><input type="radio" name="npType" value="warehouse" checked> Відділення<small>Обрати номер відділення</small></label>
+                <label><input type="radio" name="npType" value="postomat"> Поштомат<small>Обрати поштомат</small></label>
+                <label><input type="radio" name="npType" value="address"> Адресна доставка<small>Вулиця, будинок, квартира</small></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="npPoint">Відділення / адреса *</label>
+              <input id="npPoint" name="npPoint" required placeholder="Відділення №1 / вул. Хрещатик, 1">
+              <div class="field-error">Вкажіть пункт видачі або адресу</div>
+            </div>
+          </div>
+
+          <div class="checkout-block">
+            <h2>Оплата</h2>
+            <div class="radio-list">
+              <label>
+                <input type="radio" name="payment" value="mono" checked>
+                Monobank
+                <small>Онлайн-оплата на захищеній сторінці еквайрингу</small>
+              </label>
+            </div>
+          </div>
+
+          <div class="field" data-agree-field>
+            <label class="checkbox-row">
+              <input id="agree" name="agree" type="checkbox" required>
+              <span>Я погоджуюсь з <a href="offer.html" target="_blank" rel="noopener">офертою</a> та <a href="privacy.html" target="_blank" rel="noopener">політикою конфіденційності</a> *</span>
+            </label>
+            <div class="field-error">Потрібна згода на обробку даних</div>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Сплатити через Monobank</button>
+        </form>
+
+        <aside class="summary" data-checkout-summary></aside>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer" data-site-footer></footer>
+  <script src="js/products.js?v=5"></script>
+  <script src="js/cart.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script src="js/checkout.js?v=5"></script>
+</body>
+</html>

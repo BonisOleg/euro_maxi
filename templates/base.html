@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{{ page_title|default:"Euromaxi UA" }} — Euromaxi UA{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ meta_description|default:'Портативні зарядні станції Jackery, Bluetti, Anker для дому. Доставка Новою Поштою, оплата Monobank.' }}{% endblock %}">
+  <meta name="htmx-config" content='{"includeIndicatorStyles": false}'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/variables.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/pages.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/pages-home.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  {% include "partials/header.html" %}
+  <main class="site-main">
+    {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+          <div class="field-hint" role="status">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+
+  {{ cart_catalog_json|json_script:"cart-catalog-data" }}
+  <script src="{% static 'js/htmx.min.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
+  {% load django_htmx %}{% django_htmx_script %}
+  <script src="{% static 'js/cart.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
+  <script src="{% static 'js/main.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

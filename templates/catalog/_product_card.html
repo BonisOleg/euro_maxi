@@ -1,0 +1,25 @@
+{% load static %}
+<article class="product-card" data-qa="product-card">
+  <a class="product-card__media" href="{{ product.get_absolute_url }}">
+    <div class="product-card__badges">
+      {% if product.is_hit %}<span class="badge badge-hit">Хіт</span>{% endif %}
+      {% if product.is_new %}<span class="badge badge-new">Новинка</span>{% endif %}
+      {% if product.old_price_uah %}<span class="badge badge-sale">Акція</span>{% endif %}
+    </div>
+    {% with img=product.primary_image %}
+      {% if img %}
+        <img src="{{ img.image.url }}" alt="{{ img.alt|default:product.name }}" loading="lazy" width="400" height="400">
+      {% endif %}
+    {% endwith %}
+  </a>
+  <div class="product-card__body">
+    <a class="product-card__title" href="{{ product.get_absolute_url }}">{{ product }}</a>
+    <div class="product-card__meta">{{ product.short_description }}</div>
+    <div class="product-card__price-row">
+      <span class="price">{{ product.price_uah|floatformat:0 }} ₴</span>
+      {% if product.old_price_uah %}<span class="price-old">{{ product.old_price_uah|floatformat:0 }} ₴</span>{% endif %}
+    </div>
+    <div class="price-vat">з ПДВ</div>
+    <button class="btn btn-primary btn-block" type="button" data-add="{{ product.sku }}" data-qa="cart-add">Купити</button>
+  </div>
+</article>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{% url 'core:home' %}">Головна</a><span aria-hidden="true">/</span><span>Пошук</span></nav>
+    <h1 class="page-title">Результати пошуку</h1>
+    <p class="catalog-count" style="margin-bottom:20px">
+      {% if query %}За запитом «{{ query }}» знайдено: {{ paginator.count }}{% else %}Усі товари: {{ paginator.count }}{% endif %}
+    </p>
+    <div class="product-grid" data-qa="product-grid">
+      {% for product in products %}
+        {% include "catalog/_product_card.html" %}
+      {% empty %}
+        <div class="empty-state">
+          <h2>Нічого не знайдено</h2>
+          <p>Спробуйте інший запит або відкрийте каталог.</p>
+          <a class="btn btn-primary" href="{% url 'catalog:product_list' %}">Каталог</a>
+        </div>
+      {% endfor %}
+    </div>
+    {% if is_paginated %}
+      <nav class="pagination" aria-label="Сторінки">
+        {% if page_obj.has_previous %}
+          <a class="pagination__link" href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">← Назад</a>
+        {% endif %}
+        <span class="pagination__status">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+          <a class="pagination__link" href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">Далі →</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </div>
+{% endblock %}
