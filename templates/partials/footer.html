@@ -27,6 +27,18 @@
   </div>
   <div class="container footer-bottom">
     <span>© {% now "Y" %} Euromaxi UA</span>
-    <span>Оплата: Monobank · Доставка: Нова Пошта</span>
+    <p class="site-footer__credit">
+      Сайт розроблено в
+      {% if request.resolver_match and request.resolver_match.url_name == "home" %}
+        <a
+          class="site-footer__credit-link"
+          href="https://www.prometeylabs.com/internet-shop-v2/"
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >PrometeyLabs</a>
+      {% else %}
+        <span class="site-footer__credit-name">PrometeyLabs</span>
+      {% endif %}
+    </p>
   </div>
 </footer>

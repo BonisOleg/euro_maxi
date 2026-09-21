@@ -3,6 +3,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/product-docs.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/product-gallery.css' %}?v={{ STATIC_ASSET_VERSION }}">
 {% endblock %}
 {% block extra_js %}<script src="{% static 'js/product-gallery.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
 
@@ -14,10 +15,10 @@
       <span>{{ product }}</span>
     </nav>
     <div class="product-layout">
-      <div class="gallery">
-        <div class="gallery-main">
+      <div class="gallery" data-gallery>
+        <button type="button" class="gallery-main" data-gallery-open aria-haspopup="dialog" aria-label="Збільшити фото">
           <img data-main-img src="{{ product.primary_image.image.url }}" alt="{{ product.primary_image.alt|default:product.name }}">
-        </div>
+        </button>
         {% if product.images.count > 1 %}
           <div class="gallery-thumbs">
             {% for img in product.images.all %}
@@ -27,6 +28,28 @@
             {% endfor %}
           </div>
         {% endif %}
+        <div class="gallery-lightbox" data-lightbox hidden>
+          <div class="gallery-lightbox__backdrop" data-lightbox-backdrop></div>
+          <div class="gallery-lightbox__panel" role="dialog" aria-modal="true" aria-label="Збільшене фото">
+            <button type="button" class="gallery-lightbox__close" data-lightbox-close aria-label="Закрити">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18"/>
+              </svg>
+            </button>
+            <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--prev" data-lightbox-prev aria-label="Попереднє фото">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7"/>
+              </svg>
+            </button>
+            <img class="gallery-lightbox__img" data-lightbox-img alt="">
+            <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--next" data-lightbox-next aria-label="Наступне фото">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+            <p class="gallery-lightbox__count" data-lightbox-count></p>
+          </div>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-info__brand">{{ product.brand }}</div>

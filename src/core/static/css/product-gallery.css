@@ -1,0 +1,116 @@
+.gallery-main {
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body.is-lightbox-open {
+  position: fixed;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+}
+
+.gallery-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 53, 84, 0.72);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  padding: calc(56px + var(--safe-top)) 64px calc(48px + var(--safe-bottom));
+  pointer-events: none;
+}
+
+.gallery-lightbox__img {
+  max-width: min(100%, 1200px);
+  max-height: calc(100dvh - 120px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #fff;
+  border-radius: var(--radius-md);
+  pointer-events: auto;
+}
+
+.gallery-lightbox__close,
+.gallery-lightbox__nav {
+  pointer-events: auto;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-lightbox__close {
+  top: calc(12px + var(--safe-top));
+  right: 12px;
+  z-index: 2;
+}
+
+.gallery-lightbox__nav--prev {
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox__nav--next {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox__close:hover,
+.gallery-lightbox__nav:hover {
+  background: var(--color-primary-soft);
+}
+
+.gallery-lightbox__count {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(12px + var(--safe-bottom));
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 767px) {
+  .gallery-lightbox__panel {
+    padding: calc(56px + var(--safe-top)) 8px calc(56px + var(--safe-bottom));
+  }
+
+  .gallery-lightbox__img {
+    max-height: calc(100dvh - 140px);
+  }
+
+  .gallery-lightbox__nav {
+    width: 48px;
+    height: 48px;
+  }
+}
