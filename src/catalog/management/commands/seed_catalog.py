@@ -1,4 +1,4 @@
-"""Одноразовий seed каталогу — 21 SKU (Jackery + Bluetti + Anker-draft).
+"""Одноразовий seed каталогу — 25 SKU (Jackery + Bluetti + Anker-draft + SolarVault 3).
 
 Дані звірені з:
 - docs/01_MASTER_CATALOG_LightEnergyBase_Eurmaxi.xlsx (5 підтверджених Jackery: ціна netto, брутто-вага)
@@ -7,8 +7,8 @@
   час зарядки, функції, вага/габарити пристрою) — саме тому лише вони is_specs_confirmed=True.
 
 Ціна UAH навмисно НЕ рахується тут (немає підтвердженого курсу/націнки від клієнта) —
-усі товари створюються з price_uah=None, is_active=False. Команда ідемпотентна
-(update_or_create за sku) — повторний запуск не створює дублів.
+нові товари створюються з price_uah=None, is_active=False. Повторний запуск
+не затирає ціну і публікацію вже існуючих SKU.
 """
 from decimal import Decimal
 
@@ -145,9 +145,53 @@ ANKER = [
     ),
 ]
 
+# --- 4 Jackery SolarVault 3 (docs/euromaxi 4 items: MSDS вага/ємність; потужність — jackery.com) ---
+SOLARVAULT = [
+    dict(
+        sku="EMX-JACKERY-SV3-PRO", name="SolarVault 3 Pro",
+        weight_kg="25.54", dimensions="485×248×282",
+        battery_type=BatteryType.LIFEPO4, output_power_w=1200, capacity_wh=2520,
+        short_description="Домашня система накопичення (не портативна) — старт 2,52 кВт·год, до 15,12 кВт·год",
+        outputs="AC 230В до 1200Вт (on-grid, можна обмежити до 600Вт); AC-coupling 1200Вт",
+        charging="PV вхід до 4000Вт, 4×MPPT; розширення батареями BP2500",
+        features="LiFePO4, 6000 циклів; IP65; AI-тарифи; Jackery App (Wi-Fi/Bluetooth); bypass з мережі",
+        is_specs_confirmed=True, is_new=True,
+    ),
+    dict(
+        sku="EMX-JACKERY-SV3-PROMAX", name="SolarVault 3 Pro Max",
+        weight_kg="25.54", dimensions="485×248×282",
+        battery_type=BatteryType.LIFEPO4, output_power_w=2500, capacity_wh=2520,
+        short_description="Домашня система накопичення (не портативна) — 2,5 кВт, ємність від 2,52 кВт·год",
+        outputs="AC 230В до 2500Вт on-grid/off-grid; AC-coupling 2500Вт; bypass до 3680Вт",
+        charging="PV вхід до 4000Вт, 4×MPPT; розширення батареями BP2500 до 15,12 кВт·год",
+        features="LiFePO4, 6000 циклів; IP65 (−20…+55°C); аерозольне пожежогасіння; Jackery App",
+        is_specs_confirmed=True, is_new=True,
+    ),
+    dict(
+        sku="EMX-JACKERY-SV3-PROMAXAC", name="SolarVault 3 Pro Max AC",
+        weight_kg="25.54", dimensions="485×248×282",
+        battery_type=BatteryType.LIFEPO4, output_power_w=2500, capacity_wh=2520,
+        short_description="Домашній накопичувач AC-coupling (без PV-входу) для існуючої СЕС",
+        outputs="AC 230В до 2500Вт; AC-coupling 2500Вт; bypass до 3680Вт / 16А",
+        charging="Лише з мережі / існуючого інвертора (без прямого PV); розширення BP2500",
+        features="Plug & Play у розетку 230В; LiFePO4 6000 циклів; IP65; Wi-Fi/Bluetooth/Ethernet",
+        is_specs_confirmed=True, is_new=True,
+    ),
+    dict(
+        sku="EMX-JACKERY-SV3-BP2500", name="SolarVault 3 BP2500",
+        weight_kg="20.82",
+        battery_type=BatteryType.LIFEPO4, capacity_wh=2520,
+        short_description="Модуль розширення 2,52 кВт·год для SolarVault 3 Pro / Pro Max / Pro Max AC",
+        outputs="Немає власного AC — стек з інвертором SolarVault 3",
+        charging="Заряджання через головний блок SolarVault 3",
+        features="LiFePO4 41,6В / 60,6А·год; до 5 модулів на систему (разом 15,12 кВт·год)",
+        is_specs_confirmed=True, is_new=True,
+    ),
+]
+
 
 class Command(BaseCommand):
-    help = "Seed каталогу Euromaxi UA: 21 SKU (10 Jackery + 8 Bluetti + 3 Anker-draft)."
+    help = "Seed каталогу Euromaxi UA: 25 SKU (14 Jackery + 8 Bluetti + 3 Anker-draft)."
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -156,8 +200,13 @@ class Command(BaseCommand):
         anker = Brand.objects.get_or_create(name="Anker")[0]
 
         created, updated = 0, 0
-        for brand, rows in ((jackery, JACKERY_MASTER + JACKERY_DRAFT), (bluetti, BLUETTI), (anker, ANKER)):
-            for row in rows:
+        for brand, rows in (
+            (jackery, JACKERY_MASTER + JACKERY_DRAFT + SOLARVAULT),
+            (bluetti, BLUETTI),
+            (anker, ANKER),
+        ):
+            for raw in rows:
+                row = dict(raw)
                 sku = row.pop("sku")
                 name = row.pop("name")
                 price_eur = row.pop("price_eur_netto", None)
@@ -175,16 +224,25 @@ class Command(BaseCommand):
                     "features": row.pop("features", ""),
                     "short_description": row.pop("short_description", ""),
                     "is_specs_confirmed": row.pop("is_specs_confirmed", False),
-                    # ціна/публікація — навмисно НЕ активуємо, доки клієнт не підтвердить курс/націнку
-                    "price_uah": None,
-                    "is_price_confirmed": False,
-                    "is_active": False,
+                    "is_new": row.pop("is_new", False),
                 }
-                obj, was_created = Product.objects.update_or_create(sku=sku, defaults=defaults)
-                created += int(was_created)
-                updated += int(not was_created)
+                obj = Product.objects.filter(sku=sku).first()
+                if obj is None:
+                    Product.objects.create(
+                        sku=sku,
+                        price_uah=None,
+                        is_price_confirmed=False,
+                        is_active=False,
+                        **defaults,
+                    )
+                    created += 1
+                else:
+                    for field, value in defaults.items():
+                        setattr(obj, field, value)
+                    obj.save()
+                    updated += 1
 
         self.stdout.write(self.style.SUCCESS(
             f"Каталог заповнено: {created} нових, {updated} оновлено. "
-            f"Усі товари is_active=False — активуйте вручну після recalc_prices."
+            f"Ціна і публікація існуючих SKU не змінюються."
         ))

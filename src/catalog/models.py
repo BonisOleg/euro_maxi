@@ -1,6 +1,11 @@
+from pathlib import Path
+
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+
+from core.utils.documents import validate_pdf
+from core.utils.images import validate_image
 
 
 class Brand(models.Model):
@@ -132,7 +137,9 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, verbose_name="Товар", on_delete=models.CASCADE, related_name="images"
     )
-    image = models.ImageField("Зображення", upload_to="products/")
+    image = models.ImageField(
+        "Зображення", upload_to="products/", validators=[validate_image]
+    )
     alt = models.CharField("Alt-текст", max_length=200, blank=True)
     order = models.PositiveSmallIntegerField("Порядок", default=0)
     is_primary = models.BooleanField("Головне фото", default=False)
@@ -145,3 +152,43 @@ class ProductImage(models.Model):
 
     def __str__(self) -> str:
         return f"{self.product} — фото #{self.order}"
+
+
+class ProductDocumentKind(models.TextChoices):
+    MANUAL = "manual", "Інструкція"
+    CERTIFICATE = "certificate", "Сертифікат"
+
+
+def _product_document_upload_to(instance: "ProductDocument", filename: str) -> str:
+    sku = instance.product.sku if instance.product_id else "tmp"
+    safe_name = Path(filename).name
+    return f"products/docs/{sku}/{safe_name}"
+
+
+class ProductDocument(models.Model):
+    """PDF інструкції / сертифікати товару. Не проходить WebP-пайплайн."""
+
+    product = models.ForeignKey(
+        Product, verbose_name="Товар", on_delete=models.CASCADE, related_name="documents"
+    )
+    kind = models.CharField(
+        "Тип", max_length=16, choices=ProductDocumentKind.choices
+    )
+    title = models.CharField("Назва", max_length=200, blank=True)
+    file = models.FileField(
+        "PDF", upload_to=_product_document_upload_to, validators=[validate_pdf]
+    )
+    order = models.PositiveSmallIntegerField("Порядок", default=0)
+
+    class Meta:
+        verbose_name = "Документ товару"
+        verbose_name_plural = "Документи товару"
+        ordering = ["kind", "order", "id"]
+
+    def __str__(self) -> str:
+        return self.title or f"{self.product} — {self.get_kind_display()}"
+
+    def save(self, *args, **kwargs):
+        if not self.title and self.file:
+            self.title = Path(self.file.name).stem.replace("_", " ")
+        super().save(*args, **kwargs)

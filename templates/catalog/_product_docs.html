@@ -1,0 +1,48 @@
+{% with docs=product.documents.all %}
+  {% if docs %}
+    <section class="product-docs" aria-labelledby="product-docs-title">
+      <h2 id="product-docs-title">Документи</h2>
+      <ul class="product-docs__list">
+        {% for doc in docs %}
+          <li class="product-docs__item">
+              <div class="product-docs__meta">
+                <span class="product-docs__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 3v5h5"/>
+                    <path d="M8 13h8M8 17h5"/>
+                  </svg>
+                </span>
+                <div class="product-docs__text">
+                  <a
+                    class="product-docs__name"
+                    href="{{ doc.file.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{{ doc.title }}</a>
+                  {% if doc.file %}
+                    <span class="product-docs__size">PDF · {{ doc.file.size|filesizeformat }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="product-docs__actions">
+                <a
+                  class="btn btn-outline product-docs__btn"
+                  href="{{ doc.file.url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Відкрити {{ doc.title }}"
+                >Відкрити</a>
+                <a
+                  class="btn btn-secondary product-docs__btn"
+                  href="{% url 'catalog:document_download' product.slug doc.pk %}"
+                  download
+                  aria-label="Скачати {{ doc.title }}"
+                >Скачати</a>
+              </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endwith %}

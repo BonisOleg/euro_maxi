@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/product-docs.css' %}?v={{ STATIC_ASSET_VERSION }}">
+{% endblock %}
 {% block extra_js %}<script src="{% static 'js/product-gallery.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>{% endblock %}
 
 {% block content %}
@@ -68,6 +71,7 @@
           {% endif %}
           <p>Ціна вказана з ПДВ (20%).</p>
         </div>
+        {% include "catalog/_product_docs.html" %}
       </div>
     </div>
 

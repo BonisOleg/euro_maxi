@@ -1,7 +1,7 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin, TabularInline
 
-from .models import Brand, Product, ProductImage
+from .models import Brand, Product, ProductDocument, ProductImage
 
 
 @admin.register(Brand)
@@ -21,6 +21,12 @@ class ProductImageInline(TabularInline):
     fields = ["image", "alt", "order", "is_primary", "is_placeholder"]
 
 
+class ProductDocumentInline(TabularInline):
+    model = ProductDocument
+    extra = 1
+    fields = ["kind", "title", "file", "order"]
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
     list_display = [
@@ -37,7 +43,7 @@ class ProductAdmin(ModelAdmin):
     list_filter = ["brand", "battery_type", "is_active", "is_price_confirmed", "is_hit", "is_new"]
     search_fields = ["sku", "name", "brand__name"]
     prepopulated_fields = {"slug": ["name"]}
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, ProductDocumentInline]
     autocomplete_fields = ["brand"]
 
     fieldsets = (

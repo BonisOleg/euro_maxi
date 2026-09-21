@@ -3,17 +3,14 @@ from django.conf import settings
 
 
 class AdminCSPRelaxMiddleware:
-    """Послаблює `script-src` CSP лише для адмін-шляху.
+    """Знімає CSP з адмін-шляху (Unfold).
 
-    Unfold (Alpine.js) потребує `unsafe-eval` для роботи UI. У `develop.py` CSP
-    вже послаблена глобально (нема сенсу обмежувати локально), але на проді
-    (`production.py`) CSP лишається строгою (`'self'`) для вітрини — і без
-    цього middleware адмінка була б зламана суворим CSP.
+    Unfold ставить кольори в інлайн `<style id="unfold-theme-colors">` (~1400
+    `var(--color-*)` у `styles.css`). `style-src 'self'` це блокує → HTML є,
+    тема «гола». Alpine ще потребує eval + `element.style`. Вітрина без змін.
 
-    ВАЖЛИВО: цей middleware має стояти ПІСЛЯ `csp.middleware.CSPMiddleware` у
-    `MIDDLEWARE`, щоб його `process_response` (виконується "зсередини назовні",
-    тобто раніше за CSPMiddleware) встиг проставити `response._csp_update` до
-    того, як `CSPMiddleware` формує заголовок `Content-Security-Policy`.
+    Стоїть ПІСЛЯ `csp.middleware.CSPMiddleware`: `process_response` тут
+    виконується раніше і ставить `_csp_exempt` до запису заголовка.
     """
 
     ADMIN_PREFIX = "/" + settings.ADMIN_URL.lstrip("/")
@@ -24,8 +21,5 @@ class AdminCSPRelaxMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
         if request.path.startswith(self.ADMIN_PREFIX):
-            # Ключ у форматі CSP-директиви ("script-src"), як у CONTENT_SECURITY_POLICY —
-            # інакше django-csp додає ЩЕ ОДНУ окрему (неправильну) директиву в заголовок,
-            # замість об'єднання зі значенням 'self' з базового конфігу.
-            response._csp_update = {"script-src": ["'unsafe-eval'"]}
+            response._csp_exempt = True
         return response

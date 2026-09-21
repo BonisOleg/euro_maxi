@@ -97,7 +97,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # Cache-bust для локальної розробки (у prod ManifestStaticFilesStorage дає хеш у імені).
-STATIC_ASSET_VERSION = config("STATIC_ASSET_VERSION", default="20260909a")
+STATIC_ASSET_VERSION = config("STATIC_ASSET_VERSION", default="20260921a")
 STATICFILES_DIRS = []
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -147,7 +147,11 @@ LOGGING = {
 }
 
 # --- CSP (django-csp==4.0, з першого дня) ---
+# Unfold інлайн-тема (`<style id="unfold-theme-colors">`) + Alpine eval/style.
+# Виключення лише адмінки; вітрина лишається зі строгим style-src.
+_ADMIN_CSP_PREFIX = "/" + str(ADMIN_URL).strip("/") + "/"
 CONTENT_SECURITY_POLICY = {
+    "EXCLUDE_URL_PREFIXES": (_ADMIN_CSP_PREFIX,),
     "DIRECTIVES": {
         "default-src": ["'self'"],
         "script-src": ["'self'"],

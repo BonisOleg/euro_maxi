@@ -1,7 +1,12 @@
-from django.db.models import Q
+from pathlib import Path
+
+from django.db.models import Case, IntegerField, Prefetch, Q, Value, When
+from django.http import FileResponse, Http404
+from django.shortcuts import get_object_or_404
+from django.utils.text import get_valid_filename
 from django.views.generic import DetailView, ListView
 
-from .models import BatteryType, Brand, Product
+from .models import BatteryType, Brand, Product, ProductDocument, ProductDocumentKind
 
 SORT_OPTIONS = {
     "price_asc": "price_uah",
@@ -141,6 +146,20 @@ class ProductListView(ListView):
         return ctx
 
 
+def _documents_for_pdp():
+    """Інструкції першими, далі сертифікати; у групі — order."""
+    return ProductDocument.objects.order_by(
+        Case(
+            When(kind=ProductDocumentKind.MANUAL, then=Value(0)),
+            When(kind=ProductDocumentKind.CERTIFICATE, then=Value(1)),
+            default=Value(9),
+            output_field=IntegerField(),
+        ),
+        "order",
+        "id",
+    )
+
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
@@ -148,7 +167,8 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return Product.objects.filter(is_active=True).select_related("brand").prefetch_related(
-            "images"
+            "images",
+            Prefetch("documents", queryset=_documents_for_pdp()),
         )
 
     def get_context_data(self, **kwargs):
@@ -162,3 +182,24 @@ class ProductDetailView(DetailView):
             .prefetch_related("images")[:4]
         )
         return ctx
+
+
+def product_document_download(request, slug: str, pk: int) -> FileResponse:
+    """Скачування PDF з Content-Disposition: attachment (iOS Safari)."""
+    doc = get_object_or_404(
+        ProductDocument.objects.select_related("product"),
+        pk=pk,
+        product__slug=slug,
+        product__is_active=True,
+    )
+    if not doc.file:
+        raise Http404
+    filename = get_valid_filename(Path(doc.file.name).name)
+    if not filename.lower().endswith(".pdf"):
+        filename = f"{filename}.pdf"
+    return FileResponse(
+        doc.file.open("rb"),
+        as_attachment=True,
+        filename=filename,
+        content_type="application/pdf",
+    )

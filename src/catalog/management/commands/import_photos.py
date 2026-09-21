@@ -20,6 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
 PHOTO_ROOT = BASE_DIR / "photo"
 
 # SKU -> назва папки в photo/ (реальні фото від клієнта)
+SOLARVAULT_SKUS = {
+    "EMX-JACKERY-SV3-PRO",
+    "EMX-JACKERY-SV3-PROMAX",
+    "EMX-JACKERY-SV3-PROMAXAC",
+    "EMX-JACKERY-SV3-BP2500",
+}
+
 SKU_TO_PHOTO_DIR = {
     "EMX-JACKERY-500V2": "JACK-PS-500-V2",
     "EMX-JACKERY-1000V2": "JACK-PS-1000-V2",
@@ -102,6 +109,9 @@ class Command(BaseCommand):
         real_count, placeholder_count, skipped = 0, 0, 0
 
         for product in Product.objects.select_related("brand").all():
+            if product.sku in SOLARVAULT_SKUS:
+                skipped += 1
+                continue
             if product.images.exists() and not force:
                 skipped += 1
                 continue
