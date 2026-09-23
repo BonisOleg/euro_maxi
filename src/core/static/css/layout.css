@@ -207,7 +207,6 @@
 }
 
 .site-main {
-  min-height: calc(100dvh - 220px);
   background: #fff;
 }
 

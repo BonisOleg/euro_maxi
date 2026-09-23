@@ -2,6 +2,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
+from content.sanitize import clean_page_html
+
 
 class Page(models.Model):
     """Статична сторінка (Про нас, Доставка й оплата, Публічна оферта, Політика)."""
@@ -23,6 +25,10 @@ class Page(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse("content:page_detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        self.body = clean_page_html(self.body)
+        super().save(*args, **kwargs)
 
 
 class ContactMessage(models.Model):

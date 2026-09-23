@@ -7,6 +7,9 @@
   <title>{% block title %}{{ page_title|default:"Euromaxi UA" }} — Euromaxi UA{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{{ meta_description|default:'Портативні зарядні станції Jackery, Bluetti, Anker для дому. Доставка Новою Поштою, оплата Monobank.' }}{% endblock %}">
   <meta name="htmx-config" content='{"includeIndicatorStyles": false}'>
+  <link rel="icon" href="{% static 'favicon.svg' %}?v={{ STATIC_ASSET_VERSION }}" type="image/svg+xml">
+  <link rel="icon" href="{% static 'favicon-32.png' %}?v={{ STATIC_ASSET_VERSION }}" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}?v={{ STATIC_ASSET_VERSION }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
