@@ -97,7 +97,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # Cache-bust для локальної розробки (у prod ManifestStaticFilesStorage дає хеш у імені).
-STATIC_ASSET_VERSION = config("STATIC_ASSET_VERSION", default="20260923b")
+STATIC_ASSET_VERSION = config("STATIC_ASSET_VERSION", default="20260930a")
 STATICFILES_DIRS = []
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",

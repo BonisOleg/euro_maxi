@@ -21,29 +21,41 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
       Каталог товарів
     </a>
-    <form class="header-search" action="{% url 'core:search' %}" method="get" role="search">
-      <label class="sr-only" for="q">Пошук</label>
-      <input id="q" name="q" type="search" placeholder="Я хочу знайти" enterkeyhint="search" data-qa="search-input">
-      <button type="submit" aria-label="Знайти" data-qa="search-submit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      </button>
-    </form>
+    <div class="header-search" id="header-search" data-search>
+      <form class="header-search__form" action="{% url 'core:search' %}" method="get" role="search">
+        <span class="header-search__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </span>
+        <label class="sr-only" for="q">Пошук</label>
+        <input id="q" name="q" type="search" class="header-search__input" placeholder="Я хочу знайти"
+               value="{{ request.GET.q|default:'' }}"
+               enterkeyhint="search" inputmode="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="header-search-results"
+               data-qa="search-input"
+               hx-get="{% url 'core:search_suggest' %}"
+               hx-trigger="keyup changed delay:300ms, search"
+               hx-target="#header-search-results"
+               hx-sync="this:replace">
+        <button type="button" class="header-search__clear" id="header-search-clear" hidden aria-label="Очистити">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <button type="submit" aria-label="Знайти" data-qa="search-submit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </button>
+      </form>
+      <div id="header-search-results" class="header-search__suggest" role="listbox" hidden></div>
+    </div>
     <div class="header-actions">
+      <button type="button" class="header-search-toggle" id="header-search-toggle" data-qa="search-toggle"
+              aria-expanded="false" aria-controls="header-search" aria-label="Пошук">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </button>
       {% if site.phone %}<a class="header-phone" href="tel:{{ site.phone|cut:' ' }}">{{ site.phone }}</a>{% endif %}
       <a class="icon-btn" href="{% url 'commerce:cart' %}" aria-label="Кошик" data-qa="cart-page">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6l-2-3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
         <span class="cart-count" data-cart-count data-qa="cart-count">0</span>
       </a>
     </div>
-  </div>
-  <div class="container mobile-search-row">
-    <form class="header-search" action="{% url 'core:search' %}" method="get" role="search">
-      <label class="sr-only" for="q-m">Пошук</label>
-      <input id="q-m" name="q" type="search" placeholder="Я хочу знайти" enterkeyhint="search">
-      <button type="submit" aria-label="Знайти">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      </button>
-    </form>
   </div>
   <div class="mobile-nav" data-mobile-nav>
     <div class="mobile-nav-panel">

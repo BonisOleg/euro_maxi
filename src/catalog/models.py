@@ -70,6 +70,12 @@ class Product(models.Model):
 
     short_description = models.CharField("Короткий опис", max_length=300, blank=True)
     description = models.TextField("Опис", blank=True)
+    search_name = models.TextField(
+        "Нормалізована назва для пошуку", editable=False, blank=True, default=""
+    )
+    search_text = models.TextField(
+        "Нормалізований текст для пошуку", editable=False, blank=True, default=""
+    )
 
     # --- Ціни (ТЗ — тільки UAH на сайті; EUR netto — службове поле для розрахунку) ---
     price_eur_netto = models.DecimalField(

@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="{% static 'css/components.css' %}?v={{ STATIC_ASSET_VERSION }}">
   <link rel="stylesheet" href="{% static 'css/pages.css' %}?v={{ STATIC_ASSET_VERSION }}">
   <link rel="stylesheet" href="{% static 'css/pages-home.css' %}?v={{ STATIC_ASSET_VERSION }}">
+  <link rel="stylesheet" href="{% static 'css/header-search.css' %}?v={{ STATIC_ASSET_VERSION }}">
   {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -40,6 +41,7 @@
   {% load django_htmx %}{% django_htmx_script %}
   <script src="{% static 'js/cart.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
   <script src="{% static 'js/main.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
+  <script src="{% static 'js/search.js' %}?v={{ STATIC_ASSET_VERSION }}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>
